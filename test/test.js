@@ -61,8 +61,9 @@ setTimeout( cleanup, 5000 ) // if tests dont finish within 5sec
 function cleanup(){
   console._log("\ntests ok   : "+ok)
   console._log("tests error: "+errors.length)
-  if( errors.length || ok != 3 ){
+  if( errors.length > 0 || ok != 6 ){
     console.dir(errors)
     process.exit(1)
   }
+  process.exit(0)
 }
