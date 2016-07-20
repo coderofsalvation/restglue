@@ -49,11 +49,11 @@ Combine multiple endpoints into one call:
 
     myapi.pizza.getCookPageRanking = myapi.compose([
       function()   { return myapi.pizza.getAll({"sort":"-date_create"})    },
-      function(res){ return ga.getRanking(res.cook.profile_url)            },
+      function(res){ return otherapi.getRanking(res.cook.profile_url)      },
       function(res){ return res.score                                      }
     ])
 
-    myapi.pizza.getCookNameLastPizza().then( function(res){
+    myapi.pizza.getCookPageRanking().then( function(res){
       // res is '4'
     }).catch( function(err){ ..  })
 
