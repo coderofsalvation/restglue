@@ -41,6 +41,22 @@ sure you got CORS setup on your server when doing requests from the browser.
 
 > NOTE: `query` and `headers` are optional and are used only for that request.
 
+## Chained endpoints, multiple api's
+
+> Byebye async spaghetti, welcome clean code.
+
+Combine multiple endpoints into one call:
+
+    myapi.pizza.getCookPageRanking = myapi.compose([
+      function()   { return myapi.pizza.getAll({"sort":"-date_create"})    },
+      function(res){ return ga.getRanking(res.cook.profile_url)            },
+      function(res){ return res.score                                      }
+    ])
+
+    myapi.pizza.getCookNameLastPizza().then( function(res){
+      // res is '4'
+    }).catch( function(err){ ..  })
+
 ## Example: query args 
 
     myapi.pizza.getAll( {"sort":"-date_create"} )
@@ -99,28 +115,6 @@ This easifies iterative, backwardscompatible development:
     }
 
     var myapi = getApi()
-
-## Example: chained requests, multiple api's
-
-Combine multiple endpoints into one call:
-
-    myapi.pizza.getCookPageRanking = myapi.compose([
-      function()   { return myapi.pizza.getAll({"sort":"-date_create"})    },
-      function(res){ return ga.getRanking(res.cook.profile_url)            },
-      function(res){ return res.score                                      }
-    ])
-
-Byebye async spaghetti, welcome clean code:
-
-    // do a chained request
-    myapi.pizza.getCookNameLastPizza().then( function(res){
-      // res == 'Mario'
-    })
-    .catch( function(err){
-      errors.push(err)
-      cleanup()
-    })
-
 
 ## Example: HTTP auth 
 
