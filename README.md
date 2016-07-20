@@ -7,11 +7,13 @@ multi-api restful client (javascript) with glue, using superagent & promises (li
     <script type="text/javascript" src="https://cdn.jsdelivr.net/es6-promise/3.1.2/es6-promise.min.js"></script> <!-- older browsers -->
     <script type="text/javascript" src="dist/restglue.min.js"></script>
 
-> or in nodejs just `npm install apimapper` and `var apimapper = require('apimapper')`
+> or in nodejs just do `npm install restglue` and then:
+
+    var restglue = require('restglue')
 
 ## Example: single api 
 
-    var myapi = new apimapper()
+    var myapi = new restglue()
     myapi.headers['Content-Type'] = 'application/json'
     myapi.addEndpoint("pizza")
 
@@ -25,7 +27,7 @@ Not really exciting yet, but now you can do calls like so:
       console.log("could not get pizza")
     })
 
-> NOTE: use `new apimapper("http://api.foo.com/v1")` to automatically prepend an external apiurl to all endpoints,  and make 
+> NOTE: use `new restglue("http://api.foo.com/v1")` to automatically prepend an external apiurl to all endpoints,  and make 
 sure you got CORS setup on your server when doing requests from the browser.
 
 ## Endpoint function reference
@@ -78,10 +80,10 @@ Here's how to simply prevent unnecessary calls
 This easifies iterative, backwardscompatible development:
 
     function getApi(){
-      var v1       = new apimapper("http://api.foo.com/v1"),
-      var v2       = new apimapper("http://api.foo.com/v2"),
+      var v1       = new restglue("http://api.foo.com/v1"),
+      var v2       = new restglue("http://api.foo.com/v2"),
       var api      = {
-        ga: new apimapper("https://www.googleapis.com/analytics/v3") 
+        ga: new restglue("https://www.googleapis.com/analytics/v3") 
       }
 
       // *TODO* call addEndpoint(...) on v1,v2 and googleanalytics

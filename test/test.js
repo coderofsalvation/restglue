@@ -1,4 +1,4 @@
-var apimapper = require('./../')
+var restglue = require('./../')
 var apiurl    = "http://api.foo.com/v1"
 var errors    = []
 var ok    = 0
@@ -6,7 +6,7 @@ console._log  = console.log
 console.log   = function(str){ console._log("  > "+str)  }
 
 // example: on the fly
-var myapi = new apimapper()
+var myapi = new restglue()
 myapi.addEndpoint("pizza")
 myapi.addEndpoint("cook")
 myapi.headers['Content-Type'] = 'application/json'
