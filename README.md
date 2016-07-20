@@ -1,4 +1,4 @@
-restful client with glue using superagent & promises
+multi-api restful client (javascript) with glue, using superagent & promises (lightweight, no buildchain needed) 
 
 ![Build Status](https://travis-ci.org/username/reponame.svg?branch=master)
 
@@ -9,13 +9,13 @@ restful client with glue using superagent & promises
 
 > or in nodejs just `npm install apimapper` and `var apimapper = require('apimapper')`
 
-## Gettings started 
+## Example: single api 
 
     var myapi = new apimapper()
     myapi.headers['Content-Type'] = 'application/json'
     myapi.addEndpoint("pizza")
 
-That's it, now can do calls:
+Not really exciting yet, but now you can do calls like so:
 
     myapi.pizza.getAll()
     .then( function(res){  // json-result of GET /pizza
