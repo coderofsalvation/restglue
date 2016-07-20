@@ -133,26 +133,7 @@ mapAsync = function(arr, done, cb) {
   }
   return funcs[0]();
 };
-//mapAsync = function(arr, done, cb) {
-//  var f, funcs, i, k, v; funcs = []; i = 0;
-//  for (k in arr) {
-//    v = arr[k];
-//    f = function(i, v) {
-//      return function() {
-//        var e, error;
-//        try {
-//          if (funcs[i + 1] != null) {
-//            return cb(v, i, funcs[i + 1]);
-//          } else {
-//            return cb(v, i, done )
-//          }
-//        } catch (error) {
-//          e = error;
-//          return done(new Error(e));
-//        }
-//      };
-//    };
-//    funcs.push(f(i++, v));
-//  }
-//  return funcs[0]();
-//}
+
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+  module.exports = restglue;
+else window.restglue = restglue
