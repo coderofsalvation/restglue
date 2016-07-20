@@ -1,0 +1,43 @@
+{
+  "name": "restglue",
+  "version": "1.0.0",
+  "description": "restful client with glue using superagent & promises",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "superagent-dist": "^1.8.2"
+  },
+  "devDependencies": {
+    "minify": "^2.0.11"
+  },
+  "scripts": {
+    "build": "minify node_modules/superagent-dist/superagent.js src/index.js > dist/restglue.min.js",
+    "builddev": "cat node_modules/superagent-dist/superagent.js src/index.js > dist/restglue.min.js",
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coderofsalvation/restglue.git"
+  },
+  "keywords": [
+    "rest",
+    "api",
+    "wrapper",
+    "endpoint",
+    "multi",
+    "api",
+    "glue",
+    "multiple",
+    "restful",
+    "client",
+    "restclient"
+  ],
+  "author": "coderofsalvation",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coderofsalvation/restglue/issues"
+  },
+  "homepage": "https://github.com/coderofsalvation/restglue#readme"
+}
