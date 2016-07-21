@@ -1,8 +1,7 @@
+![Build Status](https://travis-ci.org/coderofsalvation/restglue.svg?branch=master)
+<img src="logo.png" style="width:80px" align="left"/>
 multi-api restful client (javascript) with glue, using superagent & promises (lightweight, no buildchain needed) 
 
-![Build Status](https://travis-ci.org/coderofsalvation/restglue.svg?branch=master)
-
-<img src="logo.png"/>
 
 ## Usage 
 
