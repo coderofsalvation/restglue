@@ -1,4 +1,4 @@
-var api = module.exports = function(apiurl){
+var api = function(apiurl){
   this.url = apiurl || ""
   this.sandbox = {}
   this.headers = {}

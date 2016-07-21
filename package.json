@@ -1,6 +1,6 @@
 {
   "name": "restglue",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "multi-api restful client (javascript) with glue, using superagent & promises (lightweight, no buildchain needed)",
   "main": "index.js",
   "directories": {
@@ -13,8 +13,8 @@
     "minify": "^2.0.11"
   },
   "scripts": {
-    "build": "minify node_modules/superagent-dist/superagent.js src/index.js > dist/restglue.min.js",
-    "builddev": "cat node_modules/superagent-dist/superagent.js src/index.js > dist/restglue.min.js",
+    "builddev": "cat node_modules/superagent-dist/superagent.js src/index.js > dist/restglue.js && cat dist/restglue.js > dist/restglue.min.js",
+    "build": "cat node_modules/superagent-dist/superagent.js src/index.js > dist/restglue.js && minify dist/restglue.js > dist/restglue.min.js",
     "test": "node test/test.js"
   },
   "repository": {

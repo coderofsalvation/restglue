@@ -2,6 +2,8 @@ multi-api restful client (javascript) with glue, using superagent & promises (li
 
 ![Build Status](https://travis-ci.org/coderofsalvation/restglue.svg?branch=master)
 
+<img src="logo.png"/>
+
 ## Usage 
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/es6-promise/3.1.2/es6-promise.min.js"></script> <!-- older browsers -->
