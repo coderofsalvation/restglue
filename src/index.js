@@ -1,4 +1,4 @@
-var api = function(apiurl){
+var restglue = function(apiurl){
   this.url = apiurl || ""
   this.sandbox = {}
   this.headers = {}
@@ -6,15 +6,15 @@ var api = function(apiurl){
   this.requestPost = []
 }
 
-api.prototype.beforeRequest = function (cb) {
+restglue.prototype.beforeRequest = function (cb) {
   this.requestPre.push(cb)
 }
 
-api.prototype.afterRequest = function (cb) {
+restglue.prototype.afterRequest = function (cb) {
   this.requestPost.push(cb)
 }
 
-api.prototype.request = function(method, url, payload, query, headers) {
+restglue.prototype.request = function(method, url, payload, query, headers) {
   var me = this
   var config = {method:method, url:url, query:query, payload:payload, headers:headers, api:this }
   if( query && typeof query == "string" ) url+= ( config.queryString = query )
@@ -39,13 +39,13 @@ api.prototype.request = function(method, url, payload, query, headers) {
   })
 }
 
-api.prototype.toQueryString = function(data){
+restglue.prototype.toQueryString = function(data){
   var args = []
   for( var i in data ) args.push( i +"="+ encodeURI(data[i]) )
   return args.join("&")
 }
 
-api.prototype.addEndpoint = function ( resourcename ){
+restglue.prototype.addEndpoint = function ( resourcename ){
   var endpoint = function(resourcename,api){
     this.resourcename = resourcename
     this.api = api
@@ -68,11 +68,11 @@ api.prototype.addEndpoint = function ( resourcename ){
   this[resourcename] = new endpoint(resourcename, this)
 }
 
-api.prototype.sandboxUrl = function(url,destination){ // configure sandboxdata for url(pattern)
+restglue.prototype.sandboxUrl = function(url,destination){ // configure sandboxdata for url(pattern)
   this.sandbox[url] = destination
 }
 
-api.prototype.getSandboxedUrl = function(method,url){
+restglue.prototype.getSandboxedUrl = function(method,url){
   var config = {method:method, url:url, payload:{}, headers: this.headers, api:this }
   for ( var regex in this.sandbox ) {
     var item = this.sandbox[regex]
@@ -94,7 +94,7 @@ api.prototype.getSandboxedUrl = function(method,url){
   return false
 }
 
-api.prototype.compose = function(chain){
+restglue.prototype.compose = function(chain){
   return function(){
     return new Promise( function(resolve, reject){
       var _res
