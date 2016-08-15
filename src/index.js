@@ -1,3 +1,5 @@
+
+
 var restglue = function(apiurl){
   this.url = apiurl || ""
   this.sandbox = {}
@@ -29,7 +31,6 @@ restglue.prototype.request = function(method, url, payload, query, headers) {
   if( method != "get" ) req.send(payload)
   return new Promise(function(resolve, reject){
     req.end( function(err, res){
-      spadmin.bus.publish(method+"."+url.replace(/\?.*/g,"").replace(/\/[0-9]+$/,"/:id"), arguments )
       for( i in me.requestPost ) me.requestPost[i](config, res, err)
       if( !err ) resolve(res.body)
       else reject(err, res)
@@ -134,6 +135,9 @@ mapAsync = function(arr, done, cb) {
   return funcs[0]();
 };
 
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined'){
+  var superagent = require('superagent')
   module.exports = restglue;
-else window.restglue = restglue
+} else{
+  window.restglue = restglue
+}
