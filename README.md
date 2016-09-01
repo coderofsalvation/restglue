@@ -7,7 +7,7 @@ RESTGLUE: multi-api restful client using superagent & promises
     <script type="text/javascript" src="https://cdn.jsdelivr.net/es6-promise/3.1.2/es6-promise.min.js"></script> <!-- older browsers -->
     <script type="text/javascript" src="dist/restglue.min.js"></script>
 
-> or in nodejs just do `npm install restglue` and then:
+> or in nodejs just do `npm install restglue superagent` and then:
 
     var restglue = require('restglue')
 
@@ -20,7 +20,7 @@ RESTGLUE: multi-api restful client using superagent & promises
 Not really exciting yet, but now you can do calls like so:
 
     myapi.pizza.getAll()
-    .then( function(res){  // json-result of GET /pizza
+    .then( function(json,res){  // json-result of GET /pizza
 
     })
     .catch( function(err){

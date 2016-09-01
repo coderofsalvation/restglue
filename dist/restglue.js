@@ -1485,7 +1485,9 @@ request.put = function(url, data, fn){
 };
 
 },{"./is-object":3,"./request":5,"./request-base":4,"emitter":1,"reduce":2}]},{},[])("superagent")
-});var restglue = function(apiurl){
+});
+
+var restglue = function(apiurl){
   this.url = apiurl || ""
   this.sandbox = {}
   this.headers = {}
@@ -1516,9 +1518,8 @@ restglue.prototype.request = function(method, url, payload, query, headers) {
   if( method != "get" ) req.send(payload)
   return new Promise(function(resolve, reject){
     req.end( function(err, res){
-      spadmin.bus.publish(method+"."+url.replace(/\?.*/g,"").replace(/\/[0-9]+$/,"/:id"), arguments )
       for( i in me.requestPost ) me.requestPost[i](config, res, err)
-      if( !err ) resolve(res.body)
+      if( !err ) resolve(res.body, res)
       else reject(err, res)
     })
   }).catch(function(err){
@@ -1621,6 +1622,9 @@ mapAsync = function(arr, done, cb) {
   return funcs[0]();
 };
 
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined'){
+  var superagent = require('superagent')
   module.exports = restglue;
-else window.restglue = restglue
+} else{
+  window.restglue = restglue
+}
