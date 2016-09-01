@@ -1519,7 +1519,8 @@ restglue.prototype.request = function(method, url, payload, query, headers) {
   return new Promise(function(resolve, reject){
     req.end( function(err, res){
       for( i in me.requestPost ) me.requestPost[i](config, res, err)
-      if( !err ) resolve(res.body, res)
+      if( typeof res.body == 'object' ) res.body.getResponse = function(){ return res }
+      if( !err ) resolve(res.body)
       else reject(err, res)
     })
   }).catch(function(err){

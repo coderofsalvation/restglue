@@ -20,8 +20,8 @@ RESTGLUE: multi-api restful client using superagent & promises
 Not really exciting yet, but now you can do calls like so:
 
     myapi.pizza.getAll()
-    .then( function(json,res){  // json-result of GET /pizza
-
+    .then( function(json){  // json-result of GET /pizza
+                            // call json.getResponse() for raw response (headers etc)
     })
     .catch( function(err){
       console.log("could not get pizza")
@@ -67,6 +67,15 @@ Combine multiple endpoints into one call:
     myapi.headers['Authorization'] = 'Basic '+btoa( login+":"+password )
 
     // do calls
+
+## Example: response headers
+
+    myapi.pizza.getAll()
+    .then( function(res){
+      var headers = res.getResponse().headers
+    })
+
+> NOTE: Make sure you have CORS configured properly on your server, otherwise certain headers won't be accessible in javascript.
 
 ## Example: hooks
 
