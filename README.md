@@ -30,7 +30,7 @@ Not really exciting yet, but now you can do calls like so:
 > NOTE: use `new restglue("http://api.foo.com/v1")` to automatically prepend an external apiurl to all endpoints,  and make 
 sure you got CORS setup on your server when doing requests from the browser.
 
-## Endpoint function reference
+## Restful endpoint function reference
 
     getAll(query, headers)                - will do GET     /pizza
     get(id, query, headers)               - will do GET     /pizza/{id}
@@ -41,6 +41,33 @@ sure you got CORS setup on your server when doing requests from the browser.
 
 > NOTE: `query` and `headers` are optional and are used only for that request.
 
+## Custom endpoints
+
+    myapi.pizza.customPost = restglue.prototype.request.bind( this, "post",  '/foo/bar',  {payload:true}, {queryfoo:1, querybar:2}, {X-HEADER-FOO:12} )
+    myapi.pizza.customGet  = restglue.prototype.request.bind( this, "get",  '/foo/bar' )
+
+## Offline sandbox 
+
+You can fake responses (for offline development etc) in 2 ways, like so:
+
+    myapi.addEndpoint("foobar")
+    myapi.addEndpoint("foo")
+
+    myapi.sandboxUrl('/foobar',       {'data':{"foo":true}}  ) 
+    myapi.sandboxUrl('/myapi',        {'path':"/js/sandbox"} )
+    myapi.sandboxUrl( /some.*regex/,  "/js/foo" )
+
+    myapi.foobar.getAll().then(function(data){    
+      // data = {"foo":true}
+    })
+
+    myapi.foo.getAll().then(function(data){    
+      // data = /js/sandbox/foo/get.json instead of GET {apiurl}/myapi/foo 
+    })
+
+> NOTE: {apiurl} is passed using `new restglue({apiurl:"http://foo.com/v1"})`    
+
+
 ## Chained endpoints, multiple api's
 
 > Byebye async spaghetti, welcome clean code.
@@ -48,10 +75,10 @@ sure you got CORS setup on your server when doing requests from the browser.
 Combine multiple endpoints into one call:
 
     myapi.pizza.getCookPageRanking = myapi.compose([
-      function()   { return myapi.pizza.getAll({"sort":"-date_create"})    },
+      function(i)  { return myapi.pizza.getAll({"sort":"-date_create"})    },
       function(res){ return otherapi.getRanking(res.cook.profile_url)      },
       function(res){ return res.score                                      }
-    ])
+    ])("foo")
 
     myapi.pizza.getCookPageRanking().then( function(res){
       // res is '4'
