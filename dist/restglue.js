@@ -1571,9 +1571,14 @@ restglue.prototype.getSandboxedUrl = function(method,url){
   for ( var regex in this.sandbox ) {
     var item = this.sandbox[regex]
     var method = method.toUpperCase()
+    console.log("regex: "+regex)
     if( url.match( new RegExp(regex, "g") ) != null ){
       if( item.path ){
-        var url_sandboxed = url.replace(/\/?\?.*/,'').replace( this.url, item.path ) + "/" + method.toLowerCase() + ".json"
+        var slug = ''
+        slug = url.replace( this.url, "")
+        slug = slug.replace(/\/?\?.*/,'')                   // remove query
+        slug = slug.replace(/\/[0-9]+/, '')   // remove id-parmeters
+        var url_sandboxed = item.path + slug + "/" + method.toLowerCase() + ".json"
         console.log("sandboxed url: "+method+" "+url+" => "+url_sandboxed)
         return url_sandboxed
       }
