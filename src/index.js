@@ -37,6 +37,7 @@ restglue.prototype.request = function(method, url, payload, query, headers) {
         resolve(res.body)
       } else{
         console.error(err)
+        console.error(JSON.stringify({url:url, payload:payload, query:query, headers:headers}))
         reject(err, res)
       } 
     })
