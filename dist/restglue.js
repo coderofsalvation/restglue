@@ -1506,12 +1506,13 @@ restglue.prototype.afterRequest = function (cb) {
 restglue.prototype.request = function(method, url, payload, query, headers) {
   var me = this
   var config = {method:method, url:url, query:query, payload:payload, headers:headers, api:this }
-  if( query && typeof query == "string" ) url+= ( config.queryString = query )
-  if( query && typeof query != "string" ) url+= ( config.queryString = "?"+me.toQueryString(query) )
+  if( query && typeof query == "string" ) config.url+= ( config.queryString = query )
+  if( query && typeof query != "string" ) config.url+= ( config.queryString = "?"+me.toQueryString(query) )
   for( var i in this.requestPre ) this.requestPre[i](config)
-  var sandbox = this.getSandboxedUrl(method,url)
+  var sandbox = this.getSandboxedUrl(config.method,config.url)
   if( sandbox && typeof sandbox != "string" ) return sandbox // return sandboxed promise
-  url = sandbox ? sandbox : url                              // set sandboxed url
+  url = sandbox ? sandbox : config.url                       // set sandboxed url
+  console.dir(url)
   var req = superagent[method]( url )
   for( i in this.headers ) req.set( i,  this.headers[i] )
   for( i in headers ) req.set( i,  headers[i] )
@@ -1572,11 +1573,11 @@ restglue.prototype.getSandboxedUrl = function(method,url){
   for ( var regex in this.sandbox ) {
     var item = this.sandbox[regex]
     var method = method.toUpperCase()
-    console.log("regex: "+regex)
     if( url.match( new RegExp(regex, "g") ) != null ){
       if( item.path ){
         var slug = ''
         slug = url.replace( this.url, "")
+        //slug = '/' + slug.join('/')
         slug = slug.replace(/\/?\?.*/,'')                   // remove query
         slug = slug.replace(/\/[0-9]+/, '')   // remove id-parmeters
         var url_sandboxed = item.path + slug + "/" + method.toLowerCase() + ".json"
@@ -1586,7 +1587,7 @@ restglue.prototype.getSandboxedUrl = function(method,url){
       if( item.data ){
         console.log("sandboxed url: "+method+" "+url+" => {}")
         var res = {body:item.data}
-        for( i in this.requestPost ) this.requestPost[i](config, res)
+        for( var i in this.requestPost ) this.requestPost[i](config, res)
         return new Promise(function(resolve, reject){ resolve(res.body) })
       }
     }
