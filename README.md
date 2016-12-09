@@ -33,8 +33,8 @@ sure you got CORS setup on your server when doing requests from the browser.
 ## Restful endpoint function reference
 
     getAll(query, headers)                - will do GET     /pizza
+    post(payload, query, headers)         - will do POST    /pizza      {..}
     get(id, query, headers)               - will do GET     /pizza/{id}
-    post(id, payload, query, headers)     - will do POST    /pizza/{id} {..}
     put(id, payload, query, headers)      - will do PUT     /pizza/{id} {..}
     patch(id, payload, query, headers)    - will do PATCH   /pizza/{id} {..}
     options(id, payload, querym headers)  - will do OPTIONS /pizza/{id} {..}

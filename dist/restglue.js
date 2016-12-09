@@ -1554,7 +1554,11 @@ restglue.prototype.addEndpoint = function ( resourcename ){
     if( id ) url+= "/"+id
     return this.api.request( "get", url, false, query, headers)
   }
-  var methods = ['post', 'put', 'options', 'patch']
+  endpoint.prototype.post = function(payload, query, headers){
+    var url = this.api.url + "/"+resourcename
+    return this.api.request( "post", url, payload, query, headers)
+  }
+  var methods = ['put', 'options', 'patch']
   methods.map( function(method){
     endpoint.prototype[method] = function(id, payload, query, headers){
       var url = this.api.url + "/"+resourcename + "/" + id
