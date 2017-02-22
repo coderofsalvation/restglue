@@ -36,15 +36,28 @@ sure you got CORS setup on your server when doing requests from the browser.
     post(payload, query, headers)         - will do POST    /pizza      {..}
     get(id, query, headers)               - will do GET     /pizza/{id}
     put(id, payload, query, headers)      - will do PUT     /pizza/{id} {..}
+    delete(id, payload, query, headers)   - will do DELETE  /pizza/{id} {..}
     patch(id, payload, query, headers)    - will do PATCH   /pizza/{id} {..}
     options(id, payload, querym headers)  - will do OPTIONS /pizza/{id} {..}
 
 > NOTE: `query` and `headers` are optional and are used only for that request.
 
-## Custom endpoints
+## Custom endpoints + monkeypatch
 
     myapi.pizza.customPost = restglue.prototype.request.bind( this, "post",  '/foo/bar',  {payload:true}, {queryfoo:1, querybar:2}, {X-HEADER-FOO:12} )
     myapi.pizza.customGet  = restglue.prototype.request.bind( this, "get",  '/foo/bar' )
+
+Also, you can monkeypatch these function to alter restglue's behaviour:
+
+    restglue.prototype.addEndpointg( resourcename  )
+    restglue.prototype.afterRequestg(cb)
+    restglue.prototype.beforeRequestg(cb)
+    restglue.prototype.composeg(chain)
+    restglue.prototype.constructorg(apiurl)
+    restglue.prototype.getSandboxedUrlg(method,url)
+    restglue.prototype.requestg(method, url, payload, query, headers)
+    restglue.prototype.sandboxUrlg(url,destination)
+    restglue.prototype.toQueryStringg(data)
 
 ## Offline sandbox 
 

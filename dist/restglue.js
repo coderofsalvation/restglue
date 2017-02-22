@@ -1512,7 +1512,6 @@ restglue.prototype.request = function(method, url, payload, query, headers) {
   var sandbox = this.getSandboxedUrl(config.method,config.url)
   if( sandbox && typeof sandbox != "string" ) return sandbox // return sandboxed promise
   url = sandbox ? sandbox : config.url                       // set sandboxed url
-  console.dir(url)
   var req = superagent[method]( url )
   for( i in this.headers ) req.set( i,  this.headers[i] )
   for( i in headers ) req.set( i,  headers[i] )
@@ -1577,6 +1576,7 @@ restglue.prototype.getSandboxedUrl = function(method,url){
   for ( var regex in this.sandbox ) {
     var item = this.sandbox[regex]
     var method = method.toUpperCase()
+
     if( url.match( new RegExp(regex, "g") ) != null ){
       if( item.path ){
         var slug = ''
