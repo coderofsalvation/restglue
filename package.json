@@ -1,6 +1,6 @@
 {
   "name": "restglue",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "multi-api restful client (javascript) with glue, using superagent & promises (lightweight, no buildchain needed)",
   "main": "index.js",
   "directories": {

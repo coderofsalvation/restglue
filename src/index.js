@@ -1,4 +1,22 @@
-
+var mapAsync = function(arr, done, cb) {
+  var f, funcs, i, k, v; funcs = []; i = 0;
+  for (k in arr) {
+    v = arr[k];
+    f = function(i, v) {
+      return function() {
+        var e, error;
+        try {
+          return cb(v, i, funcs[i+1] || done);
+        } catch (error) {
+          e = error;
+          return done(new Error(e));
+        }
+      };
+    };
+    funcs.push(f(i++, v));
+  }
+  return funcs[0]();
+};
 
 var restglue = function(apiurl){
   this.url = apiurl || ""
@@ -131,26 +149,6 @@ restglue.prototype.compose = function(chain){
     })    
   }        
 }
-
-mapAsync = function(arr, done, cb) {
-  var f, funcs, i, k, v; funcs = []; i = 0;
-  for (k in arr) {
-    v = arr[k];
-    f = function(i, v) {
-      return function() {
-        var e, error;
-        try {
-          return cb(v, i, funcs[i+1] || done);
-        } catch (error) {
-          e = error;
-          return done(new Error(e));
-        }
-      };
-    };
-    funcs.push(f(i++, v));
-  }
-  return funcs[0]();
-};
 
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined'){
   var superagent = require('superagent')
