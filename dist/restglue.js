@@ -1485,7 +1485,9 @@ request.put = function(url, data, fn){
 };
 
 },{"./is-object":3,"./request":5,"./request-base":4,"emitter":1,"reduce":2}]},{},[])("superagent")
-});var mapAsync = function(arr, done, cb) {
+});var nodejs = (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
+
+var mapAsync = function(arr, done, cb) {
   var f, funcs, i, k, v; funcs = []; i = 0;
   for (k in arr) {
     v = arr[k];
@@ -1541,8 +1543,10 @@ restglue.prototype.request = function(method, url, payload, query, headers) {
         if( typeof res.body == 'object' ) res.body.getResponse = function(){ return res }
         resolve(res.body)
       } else{
-        console.error(err)
-        console.error(JSON.stringify({url:url, payload:payload, query:query, headers:headers}))
+        if( !nodejs ){
+          console.error(err)
+          console.error(JSON.stringify({url:url, payload:payload, query:query, headers:headers}))
+        }
         reject(err, res)
       } 
     })
@@ -1637,7 +1641,7 @@ restglue.prototype.compose = function(chain){
   }        
 }
 
-if (typeof module !== 'undefined' && typeof module.exports !== 'undefined'){
+if ( nodejs ){
   var superagent = require('superagent')
   module.exports = restglue;
 } else{
