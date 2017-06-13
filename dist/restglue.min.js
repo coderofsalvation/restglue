@@ -1522,7 +1522,6 @@ restglue.prototype.beforeRequest = function (cb) {
 restglue.prototype.afterRequest = function (cb) {
   this.requestPost.push(cb)
 }
-
 restglue.prototype.request = function(method, url, payload, query, headers) {
   var me = this
   var config = {method:method, url:url, query:query, payload:payload, headers:headers, api:this }
@@ -1540,10 +1539,10 @@ restglue.prototype.request = function(method, url, payload, query, headers) {
     req.end( function(err, res){
       for( i in me.requestPost ) me.requestPost[i](config, res, err)
       if( !err ){
-		if( document.location.hash == '#debug' ) console.dir(res)
-		if( typeof res.body === 'object' ){
-		    res.body.getResponse = function(){ return res }
-		} 
+				if( !nodejs && document.location.hash == '#debug' ) console.dir(res)
+				if( !res.body ) res.body = {}
+				if( typeof res.body == "string" || typeof res.body == "boolean" || typeof res.body == "integer" ) res.body = {message:res.body}
+				res.body.getResponse = function(){ return res }
         resolve(res.body)
       } else{
         if( !nodejs ){
