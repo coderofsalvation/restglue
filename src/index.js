@@ -53,7 +53,10 @@ restglue.prototype.request = function(method, url, payload, query, headers) {
     req.end( function(err, res){
       for( i in me.requestPost ) me.requestPost[i](config, res, err)
       if( !err ){
-        if( typeof res.body == 'object' ) res.body.getResponse = function(){ return res }
+		if( document.location.hash == '#debug' ) console.dir(res)
+		if( typeof res.body === 'object' ){
+		    res.body.getResponse = function(){ return res }
+		} 
         resolve(res.body)
       } else{
         if( !nodejs ){
