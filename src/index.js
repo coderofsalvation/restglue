@@ -1,5 +1,5 @@
-var nodejs = (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
 
+var nodejs = (typeof module !== 'undefined' && typeof module.exports !== 'undefined')
 var mapAsync = function(arr, done, cb) {
   var f, funcs, i, k, v; funcs = []; i = 0;
   for (k in arr) {
@@ -73,7 +73,7 @@ restglue.prototype.request = function(method, url, payload, query, headers) {
 
 restglue.prototype.toQueryString = function(data){
   var args = []
-  for( var i in data ) args.push( i +"="+ encodeURI(data[i]) )
+  for( var i in data ) args.push( i +"="+ encodeURIComponent(data[i]) )
   return args.join("&")
 }
 
